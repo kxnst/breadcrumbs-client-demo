@@ -1,0 +1,55 @@
+{
+  "slug": "horo",
+  "head": {
+    "slug": "main",
+    "translations": {
+      "uk": "Головна гороскопів"
+    },
+    "type": "link",
+    "route_name": "horo_names_main",
+    "child": {
+      "slug": "names",
+      "translations": {
+        "uk": "Імена"
+      },
+      "type": "link",
+      "route_name": "horo_names",
+      "child": {
+        "slug": "main",
+        "translations": {
+          "uk": "Текст"
+        },
+        "type": "text",
+        "route_name": null,
+        "child": {
+          "slug": "theme_horo",
+          "translations": {
+            "uk": "Імена {{theme}}"
+          },
+          "type": "link",
+          "route_name": "horo_names_theme",
+          "child": {
+            "slug": "main",
+            "translations": {
+              "uk": "Текст"
+            },
+            "type": "text",
+            "route_name": null,
+            "child": {
+              "slug": "theme_letter_horo",
+              "translations": {
+                "uk": "Імена {{theme}}"
+              },
+              "values": {
+                "letter": "letter"
+              },
+              "type": "link",
+              "route_name": "horo_names_theme_letter",
+              "child": null
+            }
+          }
+        }
+      }
+    }
+  }
+}

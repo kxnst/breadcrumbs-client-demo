@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% for breadcrumb in breadcrumbs %}
+        {{ breadcrumb | raw }}
+    {% endfor %}
+{% endblock %}
