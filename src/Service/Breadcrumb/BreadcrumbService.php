@@ -53,12 +53,11 @@ class BreadcrumbService
                         [$resolver, $method] = $this->resolvers[$routeName]['set'][$routeVariable];
                         $value = $resolver->$method($parameterBag, $breadcrumb['values'][$routeVariable]);
                         $parameterBag->set($routeVariable, $value);
-                        $preparedRouteVariables[$routeVariable] = $value;
                     } else {
                         [$resolver, $method] = $this->resolvers[$routeName]['unset'][$routeVariable];
                         $value = $resolver->$method($parameterBag);
-                        $preparedRouteVariables[$routeVariable] = $value;
                     }
+                    $preparedRouteVariables[$routeVariable] = $value;
                 }
                 $parameterBag->set('link', $this->urlGenerator->generate($routeName, $preparedRouteVariables));
             }
