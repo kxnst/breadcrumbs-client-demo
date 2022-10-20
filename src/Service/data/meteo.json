@@ -41,7 +41,7 @@
                 "uk": "Імена {{theme}}"
               },
               "values": {
-                "letter": "letter"
+                "letter": "abc"
               },
               "type": "link",
               "route_name": "horo_names_theme_letter",
