@@ -32,6 +32,7 @@ class IndexController extends AbstractController
     {
         $request->setLocale('uk');
         $bag = new ParameterBag(['theme' => 'male']);
+        $request->attributes->set('_route', 'horo_names_theme');
         $this->initBreadcrumbs($breadcrumbService, $request);
         $breadcrumbs = $breadcrumbService->render($bag, $repository->getBySlug($breadcrumb));
 

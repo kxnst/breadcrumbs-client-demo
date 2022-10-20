@@ -4,3 +4,20 @@
         {{ breadcrumb | raw }}
     {% endfor %}
 {% endblock %}
+{% block stylesheets %}
+<style>
+    .breadcrumb-a{
+        padding: 5px;
+        background-color: blue;
+        color: white;
+    }
+    .breadcrumb-span{
+        padding: 5px;
+        background-color: black;
+        color: white;
+    }
+    .breadcrumb-a.active{
+        background-color: green;
+    }
+</style>
+{% endblock %}

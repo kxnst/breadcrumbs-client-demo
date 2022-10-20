@@ -37,11 +37,15 @@ class BreadcrumbService
 
         foreach ($breadcrumbs as $breadcrumb) {
             $isActive = false;
+            $currentRouteName = $this->request->attributes->get('_route');
 
             $preparedRouteVariables = [];
 
             $routeName = $breadcrumb['route_name'] ?? null;
             if ($routeName) {
+                if($currentRouteName == $routeName) {
+                    $isActive = true;
+                }
                 $compiledRoute = $this->routeCollection->get($routeName)->compile();
                 $routeVariables = $compiledRoute->getVariables();
                 foreach ($routeVariables as $routeVariable) {
@@ -76,6 +80,9 @@ class BreadcrumbService
             $renderer = new ($routeName ? $this->linkRenderer : $this->spanRenderer)();
             $renderer->setParameterBag($parameterBag);
             $breadcrumbsOutput[] = $isActive ? $renderer->renderActive() : $renderer->render();
+            if($isActive) {
+                break;
+            }
         }
 
         return $breadcrumbsOutput;
