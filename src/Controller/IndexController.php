@@ -32,7 +32,7 @@ class IndexController extends AbstractController
     {
         $request->setLocale('uk');
         $bag = new ParameterBag(['theme' => 'male']);
-        $request->attributes->set('_route', 'horo_names_theme');
+        //$request->attributes->set('_route', 'horo_names');
         $this->initBreadcrumbs($breadcrumbService, $request);
         $breadcrumbs = $breadcrumbService->render($bag, $repository->getBySlug($breadcrumb));
 
@@ -44,10 +44,22 @@ class IndexController extends AbstractController
         $service->setResolvers(
             [
                 'horo_names_theme' => [
-                    'theme' => [$this->horoResolver, 'resolveTheme']
+                    'unset' => [
+                        'theme' => [$this->horoResolver, 'resolveTheme']
+                    ],
+                    'set' => [
+                        'theme' => [$this->horoResolver, 'resolveThemeFromValue'],
+                        'letter' => [$this->horoResolver, 'resolveLetterFromValue']
+                    ],
                 ],
                 'horo_names_theme_letter' => [
-                    'theme' => [$this->horoResolver, 'resolveTheme']
+                    'unset' => [
+                        'theme' => [$this->horoResolver, 'resolveTheme']
+                    ],
+                    'set' => [
+                        'theme' => [$this->horoResolver, 'resolveThemeFromValue'],
+                        'letter' => [$this->horoResolver, 'resolveLetterFromValue']
+                    ],
                 ],
             ]
         );

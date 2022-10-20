@@ -50,10 +50,12 @@ class BreadcrumbService
                 $routeVariables = $compiledRoute->getVariables();
                 foreach ($routeVariables as $routeVariable) {
                     if (isset($breadcrumb['values']) && isset($breadcrumb['values'][$routeVariable])) {
-                        $preparedRouteVariables[$routeVariable] = $breadcrumb['values'][$routeVariable];
-                        $parameterBag->set($routeVariable, $breadcrumb['values'][$routeVariable]);
+                        [$resolver, $method] = $this->resolvers[$routeName]['set'][$routeVariable];
+                        $value = $resolver->$method($parameterBag, $breadcrumb['values'][$routeVariable]);
+                        $parameterBag->set($routeVariable, $value);
+                        $preparedRouteVariables[$routeVariable] = $value;
                     } else {
-                        [$resolver, $method] = $this->resolvers[$routeName][$routeVariable];
+                        [$resolver, $method] = $this->resolvers[$routeName]['unset'][$routeVariable];
                         $value = $resolver->$method($parameterBag);
                         $preparedRouteVariables[$routeVariable] = $value;
                     }
