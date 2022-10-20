@@ -47,6 +47,7 @@ class BreadcrumbService
                 foreach ($routeVariables as $routeVariable) {
                     if (isset($breadcrumb['values']) && isset($breadcrumb['values'][$routeVariable])) {
                         $preparedRouteVariables[$routeVariable] = $breadcrumb['values'][$routeVariable];
+                        $parameterBag->set($routeVariable, $breadcrumb['values'][$routeVariable]);
                     } else {
                         [$resolver, $method] = $this->resolvers[$routeName][$routeVariable];
                         $value = $resolver->$method($parameterBag);

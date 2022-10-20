@@ -38,7 +38,7 @@
             "child": {
               "slug": "theme_letter_horo",
               "translations": {
-                "uk": "Імена {{theme}}"
+                "uk": "Імена {{theme}} на букву {{letter}}"
               },
               "values": {
                 "letter": "abc"

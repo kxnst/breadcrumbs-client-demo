@@ -57,7 +57,10 @@ class IndexController extends AbstractController
         $service->setReplacements(
             [
                 'theme_horo' => ['{{theme}}' => 'theme'],
-                'theme_letter_horo' => ['{{theme}}' => 'theme'],
+                'theme_letter_horo' => [
+                    '{{theme}}' => 'theme',
+                    '{{letter}}' => 'letter',
+                ],
             ]
         );
     }
