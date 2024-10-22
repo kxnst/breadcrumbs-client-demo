@@ -12,14 +12,17 @@ trait InitsBreadcrumbsTrait
 {
     protected function initBreadcrumbs(BreadcrumbService $service, Request $request)
     {
+        //прокинути в конструктор
         /** @var RouterInterface $router */
         $router = $this->container->get('router');
         $routeCollection = $router->getRouteCollection();
 
         $service->setRouteCollection($routeCollection);
         $service->setRequest($request);
+        // це приберемо
         $service->setLinkRenderer(LinkBreadcrumbRenderer::class);
         $service->setSpanRenderer(TextBreadcrumbRenderer::class);
+        // прокинути в аргументи метода
         $this->initBreadcrumbResolvers($service);
         $this->initBreadcrumbReplacements($service);
     }

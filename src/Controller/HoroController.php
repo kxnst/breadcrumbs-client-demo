@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+// пустий контролер для посилань з хлібних крихт
 class HoroController extends AbstractController
 {
     #[Route(path: 'horo/main', name: 'horo_names_main')]

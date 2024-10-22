@@ -29,10 +29,17 @@ class BreadcrumbService
     {
     }
 
+    /**
+     * @param ParameterBagInterface $parameterBag - набір параметрів для підстановок в роути
+     * @param array $breadcrumb
+     * @return array
+     */
     public function render(ParameterBagInterface $parameterBag, array $breadcrumb)
     {
         $breadcrumbs = [];
         $breadcrumbsOutput = [];
+
+        // хлібні крихти зберігаються як linked list - розгортаємо в масив
         $this->expandBreadcrumb($breadcrumb['head'], $breadcrumbs);
 
         foreach ($breadcrumbs as $breadcrumb) {
@@ -43,26 +50,32 @@ class BreadcrumbService
 
             $routeName = $breadcrumb['route_name'] ?? null;
             if ($routeName) {
+                // перевірка, що нода хлібних крихт не веде на поточну сторінку, якщо тру - далі хлібні крихти не рендеряться
                 if($currentRouteName == $routeName) {
                     $isActive = true;
                 }
+                //компіляція роута для отримання переліку параметрів. логіка вже наче помінялась в сімфоні, тепер легше
                 $compiledRoute = $this->routeCollection->get($routeName)->compile();
                 $routeVariables = $compiledRoute->getVariables();
                 foreach ($routeVariables as $routeVariable) {
-                    if (isset($breadcrumb['values']) && isset($breadcrumb['values'][$routeVariable])) {
+                    // якщо значення встановлено в адмінці - якось його оброляємо
+                    if (isset($breadcrumb['values'][$routeVariable])) {
                         [$resolver, $method] = $this->resolvers[$routeName]['set'][$routeVariable];
                         $value = $resolver->$method($parameterBag, $breadcrumb['values'][$routeVariable]);
                         $parameterBag->set($routeVariable, $value);
                     } else {
+                        //якщо значення не встановлено - дістаємо з $parameterBag і якось обробляємо
                         [$resolver, $method] = $this->resolvers[$routeName]['unset'][$routeVariable];
                         $value = $resolver->$method($parameterBag);
                     }
                     $preparedRouteVariables[$routeVariable] = $value;
                 }
+                //генерація посилання
                 $parameterBag->set('link', $this->urlGenerator->generate($routeName, $preparedRouteVariables));
             }
             $text = $breadcrumb['translations'][$this->request->getLocale()];
 
+            // реплейсменти в тексті
             if (isset($this->replacements[$breadcrumb['slug']])) {
                 $replacedText = array_map(
                     function ($value) use ($parameterBag) {
@@ -77,6 +90,7 @@ class BreadcrumbService
             }
 
             $parameterBag->set('text', $text);
+            // генерація посилань вже з розміткою. краще повертати дто ноди хлібних крихт
             /** @var AbstractBreadcrumbRenderer $renderer */
             $renderer = new ($routeName ? $this->linkRenderer : $this->spanRenderer)();
             $renderer->setParameterBag($parameterBag);

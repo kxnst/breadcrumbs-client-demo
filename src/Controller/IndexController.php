@@ -43,7 +43,12 @@ class IndexController extends AbstractController
     {
         $service->setResolvers(
             [
+                // route name
                 'horo_names_theme' => [
+                    // set - адмін встановив значення роут параметра через адмінку,
+                    // unset - значення роут параметра потрібно підставити самому на клієнті
+                    // пи.си - писалось швидко і бездумно, скоріш за все на клієнті не потрібно буде генерити такі
+                    // монструозні конструкції, бо вся логіка - це дістати параметр з необхідного набору (set/unset)
                     'unset' => [
                         'theme' => [$this->horoResolver, 'resolveTheme']
                     ],
@@ -65,6 +70,7 @@ class IndexController extends AbstractController
         );
     }
 
+    // реплейсменти в тексті
     protected function initBreadcrumbReplacements(BreadcrumbService $service)
     {
         $service->setReplacements(
